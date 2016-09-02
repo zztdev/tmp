@@ -1,29 +1,58 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+#include<stdio.h>
 
-# Precompiled Headers
-*.gch
-*.pch
+int map[1001][1001],dist[1001];
+int flag[1001];
+int T,N,x,y,cost,min,cout;
+ 
+int dijkstra();
+int main()
+{    int i,j,k;
+     scanf("%d%d",&T,&N);
+     for(i=1;i<=N;i++)
+     {
+        for(j=1;j<=N;j++)
+        {
+        map[i][j]=1e9;
+        }
+    }
+     for(j=1;j<=T;j++)
+     {
+    scanf("%d%d",&x,&y);
+    scanf("%d",&cost);
+    if(cost<map[x][y])
+    map[x][y]=map[y][x]=cost;
+    }
+    printf("%d\n",dijkstra());
+}
+int dijkstra()
+{
+ int i,j,m,n,min_j;
+ flag[1]=1;
+for(i=2;i<=N;i++)
+    dist[i]=map[1][i];
+for(i=2;i<=N;i++)
+{
+        min=1e9;
+        for(j=1;j<=N;j++)
+            {
+            if(dist[j]<min&&flag[j]==0)
+                {
+                min=dist[j];
+                min_j=j;
+                }
+            }
+        flag[min_j]=1;
+        if(min_j==N) return min;
+    
+        for(cout=1;cout<=N;cout++)
+        {
+            if(flag[cout]==0&&map[min_j][cout]<1e9)
+            if(map[min_j][cout]+dist[min_j]<dist[cout])
+             dist[cout]=map[min_j][cout]+dist[min_j];
+        }
+        
+}
+return min;
+}
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
